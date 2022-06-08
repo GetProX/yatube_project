@@ -14,9 +14,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from .import views
-from django.urls import path,include
+from django.urls import path
+
+app_name = 'posts'
 
 urlpatterns = [
-    path('group/<slug:pk>/', views.group_posts),
-    path('', views.index),
+    path('group/<slug:slug>/', views.group_posts, name='group_list'),
+    path('', views.index, name='index'),
 ]
