@@ -1,39 +1,27 @@
-<!DOCTYPE html> <!-- Используется html 5 версии -->
-<html lang="ru"> <!-- Язык сайта - русский -->
-  <head>
-    {% extends 'base.html' %}
-    <title>{{ title }}</title>
-  </head>
-  <body>
-    <header>
-      {% include 'includes/header.html' %}
-      <h1>{{ text }}</h1>
-    </header>
-    <main>
-      {% block content %}
-      <!-- класс py-5 создает отступы сверху и снизу блока -->
-      <div class="container py-5">
+{% extends 'base.html' %}
+{% block title %}<title>{{ group.description }}</title>{% endblock %}
+    <body>
+      <header>
+        {% include 'includes/header.html' %}
         <h1>{{ text }}</h1>
-        <article>
-        {% for post in posts %}
-           <ul>
-             <li>
-               Автор: {{ post.author.get_full_name }}
-             </li>
-             <li>
-               Дата публикации: {{ post.pub_date|date:"d E Y" }}
-             </li>
-           </ul>
-           <p>{{ post.text }}</p>
-          {% if not forloop.last %}<hr>{% endif %}
-        {% endfor %}
-        </article>
-        <!-- под последним постом нет линии -->
-      </div>
-      {% endblock %}
-    </main>
-    <!-- Использованы классы бустрапа: -->
-    <!-- border-top: создаёт тонкую линию сверху блока -->
-    <!-- text-center: выравнивает текстовые блоки внутри блока по центру -->
-    <!-- py-3: контент внутри размещается с отступом сверху и снизу -->
-        </body>
+      </header>
+        {% block content %}
+           <div class="container py-5">
+             <h1>{{ text }}</h1>
+             {% for post in posts %}
+              <article>
+                <ul>
+                  <li>
+                   Автор: {{ post.author.get_full_name }}
+                  </li>
+                  <li>
+                   Дата публикации: {{ post.pub_date|date:"d E Y" }}
+                  </li>
+                </ul>
+              <p>{{ post.text|linebreaksbr }}</p>
+              {% if not forloop.last %}<hr>{% endif %}
+              </article>
+              {% endfor %}
+        </div>
+        {% endblock %}
+    </body>
